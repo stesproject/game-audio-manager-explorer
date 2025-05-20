@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, dialog } = require("electron");
+const { app, BrowserWindow, ipcMain, dialog, protocol } = require("electron");
 const path = require("path");
 const fs = require("fs");
 const mm = require("music-metadata");
@@ -9,7 +9,6 @@ function createWindow() {
     height: 700,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
-      webSecurity: false, // <- add this only during development!
     },
   });
 
@@ -51,4 +50,13 @@ ipcMain.handle("select-folder", async () => {
   return metadataList;
 });
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  protocol.registerFileProtocol('localfile', (request, callback) => {
+    const url = request.url.replace('localfile://', '');
+    callback(decodeURIComponent(url));
+  });
+
+  createWindow();
+});
+
+

@@ -18,7 +18,7 @@ function App() {
             key={index}
             onClick={() => {
               const player = document.getElementById("player");
-              player.src = encodeURI(`file://${file.path}`);
+              player.src = encodeURI(`localfile://${file.path}`);
               player.play();
             }}
           >
