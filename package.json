@@ -1,20 +1,35 @@
 {
-  "name": "electron-react-music-player",
+  "name": "game-audio-manager-explorer",
   "version": "1.0.0",
   "main": "electron/main.js",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run build-renderer && electron-builder",
+    "build-renderer": "vite build",
     "start": "electron ."
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.4.1",
     "electron": "^28.1.0",
+    "electron-builder": "^26.0.12",
     "vite": "^5.0.0"
   },
   "dependencies": {
     "music-metadata": "^7.14.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
+  },
+  "build": {
+    "appId": "com.stesproject.musicplayer",
+    "productName": "Music Player",
+    "files": [
+      "dist",
+      "main.js",
+      "preload.js",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
   }
 }

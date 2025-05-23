@@ -34,7 +34,6 @@ function App() {
 
   return (
     <div style={{ padding: 20, fontFamily: "sans-serif" }}>
-      <h1>Game Audio Manager Explorer</h1>
       <button onClick={loadMusic}>Select Folder</button>
       {progress && progress.current < progress.total && (
         <div>
