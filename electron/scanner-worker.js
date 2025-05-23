@@ -37,14 +37,14 @@ async function scan(folder) {
         title: meta.common.title || path.basename(file),
         artist: meta.common.artist || "",
         album: meta.common.album || "",
-        duration: meta.format.duration || 0,
+        length: meta.format.duration || 0,
       };
     } catch (err) {
       metadata = {
         title: path.basename(file),
         artist: "",
         album: "",
-        duration: 0,
+        length: 0,
       };
     }
 

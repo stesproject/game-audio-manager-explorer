@@ -20,16 +20,24 @@
     "react-dom": "^18.0.0"
   },
   "build": {
-    "appId": "com.stesproject.musicplayer",
-    "productName": "Music Player",
+    "appId": "com.stesproject.game",
+    "productName": "Game Audio Manager Explorer",
     "files": [
       "dist",
-      "main.js",
-      "preload.js",
-      "package.json"
+      "electron"
     ],
     "directories": {
       "buildResources": "assets"
+    },
+    "asar": true,
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
     }
   }
 }
