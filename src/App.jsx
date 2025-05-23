@@ -1,10 +1,18 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 
 function App() {
   const [tracks, setTracks] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [excludeKeyword, setExcludeKeyword] = useState("");
   const [maxLength, setMaxLength] = useState("");
+  const [progress, setProgress] = useState(null);
+
+  useEffect(() => {
+    if (window.api) {
+      const handler = (event, data) => setProgress(data);
+      window.api.onScanProgress(handler);
+    }
+  }, []);
 
   const loadMusic = async () => {
     const files = await window.api.selectFolder();
@@ -28,6 +36,14 @@ function App() {
     <div style={{ padding: 20, fontFamily: "sans-serif" }}>
       <h1>Game Audio Manager Explorer</h1>
       <button onClick={loadMusic}>Select Folder</button>
+      {progress && progress.current < progress.total && (
+        <div>
+          <p>
+            Scanning: {progress.current} / {progress.total}
+          </p>
+          <progress value={progress.current} max={progress.total}></progress>
+        </div>
+      )}
       <div>
         <input
           placeholder="Search keyword"
