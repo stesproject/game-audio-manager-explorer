@@ -115,58 +115,64 @@ function App() {
           <button ref={selectFolderButton} onClick={selectFolder}>
             Select Folder
           </button>
-          <div className="search-controls">
-            <input
-              placeholder="Search keyword"
-              value={searchKeyword}
-              onChange={(e) => setSearchKeyword(e.target.value)}
-            />
-            <input
-              placeholder="Exclude keyword"
-              value={excludeKeyword}
-              onChange={(e) => setExcludeKeyword(e.target.value)}
-            />
-            <input
-              placeholder="Max Length (sec)"
-              value={maxLength}
-              onChange={(e) => setMaxLength(e.target.value)}
-            />
-            <span>{filteredTracks.length} items</span>
-          </div>
+          {tracks?.length > 0 && (
+            <div className="search-controls">
+              <input
+                placeholder="Search keyword"
+                value={searchKeyword}
+                onChange={(e) => setSearchKeyword(e.target.value)}
+              />
+              <input
+                placeholder="Exclude keyword"
+                value={excludeKeyword}
+                onChange={(e) => setExcludeKeyword(e.target.value)}
+              />
+              <input
+                placeholder="Max Length (sec)"
+                value={maxLength}
+                onChange={(e) => setMaxLength(e.target.value)}
+              />
+              <span>{filteredTracks.length} tracks</span>
+            </div>
+          )}
         </div>
       </header>
-      <main>
-        <table ref={tracksTable}>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Artist</th>
-              <th>Album</th>
-              <th>Length</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredTracks.map((track, idx) => (
-              <tr
-                key={idx}
-                ref={(el) => (rowRefs.current[idx] = el)}
-                className={idx === currentTrackIndex ? "active" : ""}
-                onClick={() => {
-                  playTrack(idx);
-                }}
-              >
-                <td>{track.title}</td>
-                <td>{track.artist}</td>
-                <td>{track.album}</td>
-                <td>{Math.round(track.length)}s</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </main>
-      <div className="audio-player">
-        <audio ref={audioPlayer} style={{ width: "100%" }} controls />
-      </div>
+      {tracks?.length > 0 && (
+        <>
+          <main>
+            <table ref={tracksTable}>
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Artist</th>
+                  <th>Album</th>
+                  <th>Length</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredTracks.map((track, idx) => (
+                  <tr
+                    key={idx}
+                    ref={(el) => (rowRefs.current[idx] = el)}
+                    className={idx === currentTrackIndex ? "active" : ""}
+                    onClick={() => {
+                      playTrack(idx);
+                    }}
+                  >
+                    <td>{track.title}</td>
+                    <td>{track.artist}</td>
+                    <td>{track.album}</td>
+                    <td>{Math.round(track.length)}s</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </main>
+          <div className="audio-player">
+            <audio ref={audioPlayer} style={{ width: "100%" }} controls />
+          </div>
+        </>
+      )}
     </>
   );
 }
