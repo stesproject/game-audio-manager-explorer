@@ -15,13 +15,23 @@ function App() {
   const rowRefs = useRef([]);
 
   const filteredTracks = useMemo(() => {
+    const searchKeywords = searchKeyword
+      .toLowerCase()
+      .split(" ")
+      .filter(Boolean);
+    const excludeKeywords = excludeKeyword
+      .toLowerCase()
+      .split(" ")
+      .filter(Boolean);
+
     return tracks.filter((track) => {
+      const title = track.title?.toLowerCase() || "";
       const matchKeyword =
-        !searchKeyword ||
-        track.title.toLowerCase().includes(searchKeyword.toLowerCase());
+        searchKeywords.length === 0 ||
+        searchKeywords.every((kw) => title.includes(kw));
       const excludeMatch =
-        !excludeKeyword ||
-        !track.title.toLowerCase().includes(excludeKeyword.toLowerCase());
+        excludeKeywords.length === 0 ||
+        excludeKeywords.every((kw) => !title.includes(kw));
       const lengthOk = !maxLength || track.length <= parseInt(maxLength);
       return matchKeyword && excludeMatch && lengthOk;
     });
