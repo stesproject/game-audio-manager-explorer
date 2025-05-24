@@ -12,15 +12,16 @@ function App() {
   const selectFolderButton = useRef(null);
   const tracksTable = useRef(null);
   const audioPlayer = useRef(null);
+  const rowRefs = useRef([]);
 
   const filteredTracks = useMemo(() => {
     return tracks.filter((track) => {
       const matchKeyword =
         !searchKeyword ||
-        track.path.toLowerCase().includes(searchKeyword.toLowerCase());
+        track.title.toLowerCase().includes(searchKeyword.toLowerCase());
       const excludeMatch =
         !excludeKeyword ||
-        !track.path.toLowerCase().includes(excludeKeyword.toLowerCase());
+        !track.title.toLowerCase().includes(excludeKeyword.toLowerCase());
       const lengthOk = !maxLength || track.length <= parseInt(maxLength);
       return matchKeyword && excludeMatch && lengthOk;
     });
@@ -32,6 +33,14 @@ function App() {
       window.api.onScanProgress(handler);
     }
   }, []);
+
+  useEffect(() => {
+    if (currentTrackIndex !== null && rowRefs.current[currentTrackIndex]) {
+      rowRefs.current[currentTrackIndex].scrollIntoView({
+        block: "center",
+      });
+    }
+  }, [currentTrackIndex, filteredTracks]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -90,40 +99,40 @@ function App() {
 
   return (
     <>
-      <header>
-        <button ref={selectFolderButton} onClick={selectFolder}>
-          Select Folder
-        </button>
-        {progress && progress.current < progress.total && (
-          <div className="progress-overlay">
-            <div className="progress-box">
-              <h3>Scanning Files...</h3>
-              <p>
-                {progress.current} / {progress.total}
-              </p>
-              <progress
-                value={progress.current}
-                max={progress.total}
-              ></progress>
-            </div>
+      {progress && progress.current < progress.total && (
+        <div className="progress-overlay">
+          <div className="progress-box">
+            <h3>Scanning Files...</h3>
+            <p>
+              {progress.current} / {progress.total}
+            </p>
+            <progress value={progress.current} max={progress.total}></progress>
           </div>
-        )}
-        <div>
-          <input
-            placeholder="Search keyword"
-            value={searchKeyword}
-            onChange={(e) => setSearchKeyword(e.target.value)}
-          />
-          <input
-            placeholder="Exclude keyword"
-            value={excludeKeyword}
-            onChange={(e) => setExcludeKeyword(e.target.value)}
-          />
-          <input
-            placeholder="Max Length (sec)"
-            value={maxLength}
-            onChange={(e) => setMaxLength(e.target.value)}
-          />
+        </div>
+      )}
+      <header>
+        <div className="header-content">
+          <button ref={selectFolderButton} onClick={selectFolder}>
+            Select Folder
+          </button>
+          <div className="search-controls">
+            <input
+              placeholder="Search keyword"
+              value={searchKeyword}
+              onChange={(e) => setSearchKeyword(e.target.value)}
+            />
+            <input
+              placeholder="Exclude keyword"
+              value={excludeKeyword}
+              onChange={(e) => setExcludeKeyword(e.target.value)}
+            />
+            <input
+              placeholder="Max Length (sec)"
+              value={maxLength}
+              onChange={(e) => setMaxLength(e.target.value)}
+            />
+            <span>{filteredTracks.length} items</span>
+          </div>
         </div>
       </header>
       <main>
@@ -140,6 +149,7 @@ function App() {
             {filteredTracks.map((track, idx) => (
               <tr
                 key={idx}
+                ref={(el) => (rowRefs.current[idx] = el)}
                 className={idx === currentTrackIndex ? "active" : ""}
                 onClick={() => {
                   playTrack(idx);
@@ -155,7 +165,7 @@ function App() {
         </table>
       </main>
       <div className="audio-player">
-        <audio ref={audioPlayer} style={{ width: "100%" }} />
+        <audio ref={audioPlayer} style={{ width: "100%" }} controls />
       </div>
     </>
   );
