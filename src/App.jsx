@@ -97,6 +97,10 @@ function App() {
     }
   };
 
+  const openDirectoryAtPath = (path) => {
+    window.api.openFolder(path);
+  };
+
   return (
     <>
       {progress && progress.current < progress.total && (
@@ -147,6 +151,7 @@ function App() {
                   <th>Artist</th>
                   <th>Album</th>
                   <th>Length</th>
+                  <th>Open Directory</th>
                 </tr>
               </thead>
               <tbody>
@@ -163,6 +168,18 @@ function App() {
                     <td>{track.artist}</td>
                     <td>{track.album}</td>
                     <td>{Math.round(track.length)}s</td>
+                    <td>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openDirectoryAtPath(track.path);
+                        }}
+                        title="Open directory"
+                      >
+                        📂
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>

@@ -1,4 +1,11 @@
-const { app, BrowserWindow, dialog, ipcMain, protocol } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  dialog,
+  ipcMain,
+  protocol,
+  shell,
+} = require("electron");
 const path = require("path");
 const { Worker } = require("worker_threads");
 
@@ -53,6 +60,10 @@ function createWindow() {
           reject(new Error(`Worker stopped with exit code ${code}`));
       });
     });
+  });
+
+  ipcMain.on("open-folder", (event, filePath) => {
+    shell.showItemInFolder(filePath);
   });
 }
 
