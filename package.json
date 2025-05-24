@@ -1,11 +1,15 @@
 {
   "name": "game-audio-manager-explorer",
+  "productName": "Game Audio Manager Explorer",
   "version": "1.0.0",
   "main": "electron/main.js",
+  "author": "Stefano Mercadante <stefmercadante@gmail.com>",
+  "license": "MIT",
+  "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "npm run build-renderer && electron-builder",
-    "build-renderer": "vite build",
+    "build": "vite build",
+    "electron:build": "npm run build && electron-builder",
     "start": "electron ."
   },
   "devDependencies": {
@@ -21,7 +25,7 @@
   },
   "build": {
     "appId": "com.stesproject.game",
-    "productName": "Game Audio Manager Explorer",
+    "productName": "GAME",
     "files": [
       "dist",
       "electron"
@@ -37,7 +41,8 @@
       "target": "dmg"
     },
     "linux": {
-      "target": "AppImage"
+      "target": "AppImage",
+      "category": "AudioVideo"
     }
   }
 }

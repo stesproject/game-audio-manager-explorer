@@ -2,17 +2,25 @@ const { app, BrowserWindow, dialog, ipcMain, protocol } = require("electron");
 const path = require("path");
 const { Worker } = require("worker_threads");
 
+const isDev = process.env.NODE_ENV === "development" || !app.isPackaged;
+
 function createWindow() {
   const win = new BrowserWindow({
+    title: "Game Audio Manager Explorer",
+    icon: path.join(__dirname, "assets", "icon.png"),
     width: 800,
     height: 600,
     webPreferences: {
+      sandbox: false,
       preload: path.join(__dirname, "preload.js"),
     },
   });
 
-  // win.loadFile("dist/index.html"); // In production
-  win.loadURL("http://localhost:5173"); // In development
+  if (isDev) {
+    win.loadURL("http://localhost:5173");
+  } else {
+    win.loadFile(path.join(__dirname, "../index.html"));
+  }
 
   ipcMain.handle("select-folder", async () => {
     const result = await dialog.showOpenDialog(win, {

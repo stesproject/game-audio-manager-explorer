@@ -22,7 +22,7 @@ function getAllFiles(dir, allFiles = []) {
   return allFiles;
 }
 
-async function scan(folder) {
+async function scanFolder(folder) {
   const allFiles = getAllFiles(folder);
   const audioFiles = allFiles.filter(isAudioFile);
   const total = audioFiles.length;
@@ -65,4 +65,4 @@ async function scan(folder) {
   parentPort.postMessage({ type: "done", tracks });
 }
 
-scan(workerData.folder);
+scanFolder(workerData.folder);
