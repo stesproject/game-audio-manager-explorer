@@ -15,7 +15,7 @@ function createWindow() {
   const win = new BrowserWindow({
     title: "Game Audio Manager Explorer",
     icon: path.join(__dirname, "assets", "icon.png"),
-    width: 800,
+    width: 900,
     height: 600,
     webPreferences: {
       sandbox: false,
