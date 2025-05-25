@@ -1,10 +1,8 @@
 # Game Audio Manager Explorer
 
-<video width="896" height="578" autoplay>
-  <source src="res/game-video.mp4" type="video/mp4">
-</video>
-
 Game Audio Manager Explorer (GAME) is a software tool designed to help you efficiently manage your libraries of audio files, including both sound effects and music. It is specifically tailored to assist in finding the perfect tracks for games or any other project.
+
+<img src="res/app_preview.gif" alt="Game Audio Manager Explorer preview" width="800"/>
 
 ## Features 🌟
 
