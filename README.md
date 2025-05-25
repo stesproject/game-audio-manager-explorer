@@ -4,20 +4,6 @@ Game Audio Manager Explorer (GAME) is a software tool designed to help you effic
 
 <img src="res/app_preview.gif" alt="Game Audio Manager Explorer preview" width="800"/>
 
-## Features 🌟
-
-- **Asynchronous subfolder scanning:** select a main directory, and the app will scan for any audio files within, even if there is a very large number of files.
-
-- **Wide format support:** compatible with .mp3, .wav, .ogg, and .flac file formats.
-
-- **Metadata display:** presents audio files in a minimalistic and clean table, displaying the title, artist, album, and length of each track.
-
-- **Easy track control and navigation:** click on a track to start playing it, scroll through tracks using arrow keys, and press Enter to start or stop playback.
-
-- **Easy export:** click on the "Open Directory" button to quickly access the directory at the file path.
-
-- **Track filtering:** filter tracks by keyword, excluded keyword, or maximum length to easily find the audio files you need.
-
 ## Installation 🛠️
 
 To run the program, follow these steps:
@@ -26,26 +12,49 @@ To run the program, follow these steps:
 2. Navigate into the program directory
 3. Open a terminal and run the following command to install the required dependencies:
 
-`npm install`
+    `npm install`
 
 4. Still in the terminal, start the program by running:
 
-`npm run dev`
+    `npm run dev`
 
 NOTE: you also need Node.js installed on your machine.
 
 Unfortunately, I have not been able to create a working build at this time, so a click-and-run package is not available. For the details check the [related issue](https://github.com/stesproject/game-audio-manager-explorer/issues/1).
+
+## Usage 🌟
+
+Select a folder containing audio files (.mp3, .wav, .ogg, and .flac are supported).
+This will go into children directories and show all audio track in a clean minimalistic table.
+
+The field for each track are:
+
+- **Title** Corresponding to file name.
+- **Artist** Retrieved from metadata.
+- **Album** Retrieved from metadata.
+- **Length** Duration of the track measured in seconds.
+- **Open Directory** button that opens the file location in your file manager.
+
+To play a track you can either scroll through them using the `up/down arrow keys` or click on the track.
+In both cases the track will starts playing automatically.
+
+Press `Enter` to start/stop playing a track.
+
+### Filtering
+
+Tracks can be filtered by the following text bars:
+
+- *Search Keyword* will semantically match the Title (file name), it is not case-sensitive and you do not need exact match.
+- *Exclude keyword* will exclude all Titles including those words or sentences.
+- *Max Length (sec)* allows you to filter tracks by duration of the track.
 
 ## What's Next 🔮
 
 I would like to enhance the program with the following useful features:
 
 - **Column-specific keyword filtering**: implement the ability to filter by keyword directly within each column, allowing users to filter by title, artist, or album. The filter by maximum length be at the top of the corresponding column.
-
 - **Column sorting**: enable sorting of columns alphabetically and by track length.
-
 - **Favorites tab**: introduce a feature to save files to a "Favorites" tab.
-
 - **Project grouping**: allow users to group files into specific "projects" for streamlined management and easy export in the future.
 
 ## Contributing 🤝
